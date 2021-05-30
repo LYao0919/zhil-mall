@@ -1,10 +1,10 @@
 /*
  * @Author: 鲁遥
  * @Date: 2021-05-07 21:11:15
- * @LastEditTime: 2021-05-10 16:52:27
+ * @LastEditTime: 2021-05-30 20:15:30
  * @LastEditors: your name
  * @Description:
- * @FilePath: /mall/mall-serve/models/goodsModel.js
+ * @FilePath: /zhil-mall/mall-serve/models/goodsModel.js
  */
 const mongoose = require('mongoose');
 let Schema = mongoose.Schema;
@@ -26,5 +26,5 @@ const goodSchema = new Schema({
 })
 
 const goodsModel = mongoose.model('goods', goodSchema);
-module.exports = goodsModel
+module.exports = goodsModel;
 

@@ -1,10 +1,10 @@
 /*
  * @Author: 鲁遥
  * @Date: 2021-05-10 15:52:59
- * @LastEditTime: 2021-05-24 20:26:41
+ * @LastEditTime: 2021-05-30 19:26:21
  * @LastEditors: your name
  * @Description:
- * @FilePath: /mall/mall-h5/api/API_URL.ts
+ * @FilePath: /zhil-mall/mall-h5/api/API_URL.ts
  */
 
 import service from "./../utils/http";
@@ -48,9 +48,12 @@ export const apiUrl = {
             method: "post",
         });
     },
-    getCHP() {
+    // 用户注册
+    register(params) {
         return service({
-            url: `https://chp.shadiao.app/api.php`,
+            url: `${API}/user/register`,
+            data: params,
+            method: "post",
         });
     }
 }

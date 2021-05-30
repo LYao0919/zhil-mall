@@ -1,10 +1,10 @@
 <!--
  * @Author: 鲁遥
  * @Date: 2021-05-24 20:41:48
- * @LastEditTime: 2021-05-24 20:57:49
+ * @LastEditTime: 2021-05-30 19:15:26
  * @LastEditors: your name
  * @Description: 
- * @FilePath: /mall/mall-h5/src/views/search/index.vue
+ * @FilePath: /zhil-mall/mall-h5/src/views/search/index.vue
 -->
 <template>
   <div class="search">
@@ -20,6 +20,7 @@
     <ul>
       <li
         @click="selGoods(good)"
+        v-if="goodsData.length > 0"
         class="good"
         v-for="(good, ind) in goodsData"
         :key="ind"
@@ -33,6 +34,9 @@
             <del class="price">{{ good.orl_price }}</del>
           </p>
         </div>
+      </li>
+      <li v-else>
+        <van-empty description="暂无数据" />
       </li>
     </ul>
   </div>
@@ -58,10 +62,10 @@ export default defineComponent({
       searchVal.value &&
         $API
           .searchGoods({ name: searchVal.value })
-          .then((res) => {
+          .then((res: { data: any[] }) => {
             goodsData.value = res.data;
           })
-          .finally((_) => {
+          .finally((_: any) => {
             console.log(_);
           });
     }

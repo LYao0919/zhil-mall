@@ -1,10 +1,10 @@
 /*
  * @Author: 鲁遥
  * @Date: 2021-05-06 18:23:48
- * @LastEditTime: 2021-05-10 16:22:09
+ * @LastEditTime: 2021-05-30 19:26:40
  * @LastEditors: your name
  * @Description: 
- * @FilePath: /mall/mall-serve/app.js
+ * @FilePath: /zhil-mall/mall-serve/app.js
  */
 const Koa = require('koa')
 const app = new Koa()
@@ -53,9 +53,7 @@ app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
 
-app.use(views(__dirname + '/views', {
-  extension: 'pug'
-}))
+
 
 // logger
 app.use(async (ctx, next) => {

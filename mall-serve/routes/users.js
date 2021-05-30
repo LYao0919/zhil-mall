@@ -11,15 +11,7 @@ const UserController = require('./../controller/user')
 
 router.prefix('/user')
 
-// router.get('/', function (ctx, next) {
-//   ctx.body = 'this is a users response!'
-// })
-
-// router.get('/bar', function (ctx, next) {
-//   ctx.body = 'this is a users/bar response'
-// })
-
 router.get('/', UserController.userlist)
-// router.post('/like', UserController.userLike)
+router.post('/register', UserController.userRegister)
 
 module.exports = router

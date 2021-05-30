@@ -1,10 +1,10 @@
 <!--
  * @Author: 鲁遥
  * @Date: 2021-05-15 23:50:31
- * @LastEditTime: 2021-05-16 00:10:28
+ * @LastEditTime: 2021-05-30 22:29:49
  * @LastEditors: your name
  * @Description: 
- * @FilePath: /mall/mall-h5/src/views/user/component/register.vue
+ * @FilePath: /zhil-mall/mall-h5/src/views/user/component/register.vue
 -->
 <template>
   <div class="register">
@@ -18,22 +18,23 @@
       <van-field
         v-model="state.tel"
         type="tel"
+        name="tel"
         label="手机号"
         placeholder="手机号"
         :rules="[{ required: true, message: '请填写手机号' }]"
       />
 
       <van-field
-        v-model="state.username"
-        name="用户名"
+        v-model="state.name"
+        name="name"
         label="用户名"
         placeholder="用户名"
         :rules="[{ required: true, message: '请填写用户名' }]"
       />
       <van-field
-        v-model="state.password"
+        v-model="state.pwd"
         type="password"
-        name="密码"
+        name="pwd"
         label="密码"
         placeholder="密码"
         :rules="[{ required: true, message: '请填写密码' }]"
@@ -47,7 +48,7 @@
   </div>
 </template>
 <script lang="ts">
-import Vue, { defineComponent, reactive } from "vue";
+import { defineComponent, inject, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { Toast } from "vant";
 
@@ -57,15 +58,20 @@ export default defineComponent({
   },
   setup() {
     let router = useRouter();
+    const $API = inject("$API");
     const state = reactive({
-      username: "",
+      name: "",
       tel: "",
-      password: "",
+      pwd: "",
     });
 
     function onSubmit(values) {
-      console.log("submit", values);
-      Toast.success("注册成功");
+      $API
+        .register(values)
+        .then((res) => {
+          Toast.success("注册成功");
+        })
+        .catch((err) => {});
     }
 
     return {

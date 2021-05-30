@@ -1,10 +1,10 @@
 <!--
  * @Author: 鲁遥
  * @Date: 2021-05-15 23:14:04
- * @LastEditTime: 2021-05-16 00:10:42
+ * @LastEditTime: 2021-05-30 22:25:20
  * @LastEditors: your name
  * @Description: 
- * @FilePath: /mall/mall-h5/src/views/user/component/notLoggedIn.vue
+ * @FilePath: /zhil-mall/mall-h5/src/views/user/component/notLoggedIn.vue
 -->
 
 <template>
@@ -23,6 +23,7 @@
     <van-form class="user-info" @submit="onSubmit">
       <van-field
         v-model="state.tel"
+        name="tel"
         type="tel"
         label="手机号"
         placeholder="手机号"
@@ -37,9 +38,9 @@
         :rules="[{ required: true, message: '请填写用户名' }]"
       /> -->
       <van-field
-        v-model="state.password"
+        v-model="state.pwd"
         type="password"
-        name="密码"
+        name="pwd"
         label="密码"
         placeholder="密码"
         :rules="[{ required: true, message: '请填写密码' }]"
@@ -55,19 +56,27 @@
   </div>
 </template>
 <script lang="ts">
-import Vue, { defineComponent, reactive } from "vue";
+import Vue, { defineComponent, inject, reactive } from "vue";
 import { useRouter } from "vue-router";
 export default defineComponent({
   setup() {
     let router = useRouter();
+    let $API = inject("$API");
     const state = reactive({
-      //   username: "",
       tel: "",
-      password: "",
+      pwd: "",
     });
 
     function onSubmit(values) {
       console.log("submit", values);
+      $API
+        .register(values)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
 
     return {
