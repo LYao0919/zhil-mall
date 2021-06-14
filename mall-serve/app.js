@@ -1,33 +1,40 @@
 /*
  * @Author: 鲁遥
  * @Date: 2021-05-06 18:23:48
- * @LastEditTime: 2021-05-30 19:26:40
+ * @LastEditTime: 2021-06-14 16:01:31
  * @LastEditors: your name
  * @Description: 
- * @FilePath: /zhil-mall/mall-serve/app.js
+ * @FilePath: /mall-serve/app.js
  */
 const Koa = require('koa')
 const app = new Koa()
-const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
-
 const cors = require('koa2-cors')
+const koajwt = require('koa-jwt')
 
 
 const index = require('./routes/index')
 const users = require('./routes/users')
 const goods = require('./routes/goods')
+const carts = require('./routes/carts')
 
-
+const { SECRET } = require('./utils/secret')
 
 const { connect } = require('./db/init')
 connect();
 
 
 // error handler
+// app.use(koajwt({
+//   secret: SECRET
+// }).unless({
+//   path: [/\/user\/loginAndRegister/, /\/goods/] // 哪一个接口忽略jwt验证
+// }))
+
+
 onerror(app)
 
 // middlewares
@@ -36,7 +43,7 @@ app.use(cors({
     // if (ctx.url === '/test') {
     //     return '*'; // 允许来自所有域名请求
     // }
-    // return 'http://localhost:8080'; //只允许http://localhost:8080这个域名的请求
+    // return 'http://localhost:4000'; //只允许http://localhost:8080这个域名的请求
     return "*"
   },
   maxAge: 5, //指定本次预检请求的有效期，单位为秒。
@@ -68,6 +75,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(goods.routes(), goods.allowedMethods())
+app.use(carts.routes(), carts.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

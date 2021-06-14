@@ -1,10 +1,10 @@
 /*
  * @Author: 鲁遥
  * @Date: 2021-05-10 15:52:59
- * @LastEditTime: 2021-05-30 19:26:21
+ * @LastEditTime: 2021-06-14 15:08:01
  * @LastEditors: your name
  * @Description:
- * @FilePath: /zhil-mall/mall-h5/api/API_URL.ts
+ * @FilePath: /mall-h5/api/API_URL.ts
  */
 
 import service from "./../utils/http";
@@ -49,9 +49,17 @@ export const apiUrl = {
         });
     },
     // 用户注册
-    register(params) {
+    loginAndRegister(params) {
         return service({
-            url: `${API}/user/register`,
+            url: `${API}/user/loginAndRegister`,
+            data: params,
+            method: "post",
+        });
+    },
+    // 加购
+    addCart(params) {
+        return service({
+            url: `${API}/cart/add`,
             data: params,
             method: "post",
         });

@@ -1,24 +1,23 @@
 /*
  * @Author: 鲁遥
  * @Date: 2021-05-10 15:47:18
- * @LastEditTime: 2021-05-10 17:12:54
+ * @LastEditTime: 2021-06-14 20:18:48
  * @LastEditors: your name
  * @Description:
- * @FilePath: /mall/mall-h5/utils/http.ts
+ * @FilePath: /mall-h5/utils/http.ts
  */
+import router from './../src/router';
 
 import axios from "axios";
+import { Toast } from 'vant';
 
-
-let lang = navigator.language;//常规浏览器语言和IE浏览器
-
+// let lang = navigator.language;//常规浏览器语言和IE浏览器
+const token = localStorage.getItem('token');
+// config.headers.common['Authorization'] = 'Bearer ' + token;
 const headerObj = {
     // "Content-Type": "application/json;charset=UTF-8",
-    // // token: "7777777!",
-    // 'system-source': 'WEB',
-    // 'currency': 'USD',
+    'Authorization': 'Bearer ' + token,
     // 'lang': lang,
-    // 'app-id': '0'
 };
 
 // 创建一个 axios 实例
@@ -26,7 +25,7 @@ const service = axios.create({
     // baseURL: process.env.VUE_APP_API,
     timeout: 1000 * 30,
     // withCredentials: true,
-    // headers: headerObj
+    headers: headerObj
 });
 
 //请求拦截
@@ -45,12 +44,19 @@ service.interceptors.request.use(
  */
 service.interceptors.response.use(response => {
     // 对响应数据做些事
+    console.log(response, 222);
+
     return Promise.resolve(response.data);
 }, error => {
+    console.log(error.response.status, 111);
+
     if (error && error.response) {
         switch (error.response.status) {
             case 400: console.log('错误请求'); break;
             case 401:
+                localStorage.removeItem('user');
+                Toast.fail(error.response.data.msg)
+                router.push({ name: "User" })
                 // store.dispatch('deleteUserToken');
                 break;
             case 403: console.log('拒绝访问'); break;

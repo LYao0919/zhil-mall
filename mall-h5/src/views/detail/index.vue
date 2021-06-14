@@ -1,10 +1,10 @@
 <!--
  * @Author: 鲁遥
  * @Date: 2021-05-11 20:37:35
- * @LastEditTime: 2021-05-24 21:07:40
+ * @LastEditTime: 2021-06-14 17:33:35
  * @LastEditors: your name
  * @Description: 
- * @FilePath: /mall/mall-h5/src/views/detail/index.vue
+ * @FilePath: /mall-h5/src/views/detail/index.vue
 -->
 <template>
   <van-button @click="router.go(-1)" plain class="go-back" round type="default">
@@ -32,10 +32,9 @@
         <del class="price">{{ goodsDetail.orl_price }}</del>
       </p>
     </div>
-    <van-grid :column-num="3">
+    <van-grid :column-num="2">
       <van-grid-item>运费 {{ goodsDetail.__v }} </van-grid-item>
       <van-grid-item>数量 {{ goodsDetail.amount }} </van-grid-item>
-      <van-grid-item>收藏 {{ goodsDetail.orl_price }} </van-grid-item>
     </van-grid>
   </div>
   <van-tabs v-model:active="active">
@@ -48,7 +47,7 @@
   <!-- 加购 -->
 
   <van-action-bar class="cart-bar">
-    <van-action-bar-icon icon="chat-o" text="客服" dot />
+    <!-- <van-action-bar-icon icon="chat-o" text="客服" dot /> -->
     <!-- <van-action-bar-icon icon="shop-o" text="店铺" badge="12" /> -->
     <van-action-bar-icon
       icon="cart-o"
@@ -60,33 +59,47 @@
         })
       "
     />
-    <van-action-bar-button type="warning" text="加入购物车" />
+    <van-action-bar-button @click="addCart" type="warning" text="加入购物车" />
     <van-action-bar-button type="danger" text="立即购买" />
   </van-action-bar>
 </template>
 <script lang="ts">
 import { defineComponent, inject, onMounted, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { Toast } from "vant";
 
 export default defineComponent({
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const $API = inject("$API");
+    const $API = <any>inject("$API");
     const goodsDetail = ref({});
     const activeName = ref("detail");
     let images = ref([]);
 
     function getDetail(params: any) {
-      $API.getGoodsDetail({ id: params.id }).then((res: { data: {} }) => {
+      $API.getGoodsDetail({ id: params.id }).then((res) => {
         console.log(res);
         goodsDetail.value = res.data;
       });
     }
+
+    function addCart() {
+      $API.addCart({ id: route.params.id.toString() }).then((res) => {
+        console.log(res);
+        if (res.code == 200) {
+          Toast.success(res.msg);
+        } else {
+          Toast.fail(res.msg);
+        }
+      });
+    }
+
     onMounted(() => {
       getDetail({ id: route.params.id });
     });
     return {
+      addCart,
       images,
       goodsDetail,
       activeName,

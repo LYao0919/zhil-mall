@@ -1,10 +1,10 @@
 /*
  * @Author: 鲁遥
  * @Date: 2021-05-07 22:51:46
- * @LastEditTime: 2021-05-24 20:50:02
+ * @LastEditTime: 2021-06-14 16:26:53
  * @LastEditors: your name
  * @Description:
- * @FilePath: /mall/mall-serve/controller/goods.js
+ * @FilePath: /mall-serve/controller/goods.js
  */
 
 // const goodsModel = require('./../models/goodsModel')
@@ -74,24 +74,7 @@ class GoodsController {
         }
     }
 
-    async getHome111(ctx) {
-        try {
-            let { pageSize, current } = ctx.request.query;
-            let skip = (Number(current) - 1) * Number(pageSize)
-            let data = await goodsModel.find().skip(skip).limit(Number(pageSize))
 
-            ctx.body = {
-                code: 0,
-                msg: 'SUCCESS',
-                data: data
-            }
-
-
-        } catch (error) {
-            console.log(333);
-            ctx.throw(error)
-        }
-    }
 }
 
 module.exports = new GoodsController

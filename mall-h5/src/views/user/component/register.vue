@@ -1,10 +1,10 @@
 <!--
  * @Author: 鲁遥
  * @Date: 2021-05-15 23:50:31
- * @LastEditTime: 2021-05-30 22:29:49
+ * @LastEditTime: 2021-06-14 13:46:22
  * @LastEditors: your name
  * @Description: 
- * @FilePath: /zhil-mall/mall-h5/src/views/user/component/register.vue
+ * @FilePath: /mall-h5/src/views/user/component/register.vue
 -->
 <template>
   <div class="register">
@@ -21,7 +21,10 @@
         name="tel"
         label="手机号"
         placeholder="手机号"
-        :rules="[{ required: true, message: '请填写手机号' }]"
+        :rules="[
+          { required: true, message: '请填写手机号' },
+          { pattern: /^1[3456789]\d{9}$/, message: '手机号码格式错误！' },
+        ]"
       />
 
       <van-field
@@ -66,10 +69,17 @@ export default defineComponent({
     });
 
     function onSubmit(values) {
+      values.type = "register";
       $API
-        .register(values)
+        .loginAndRegister(values)
         .then((res) => {
-          Toast.success("注册成功");
+          if (res.code == 400) Toast.fail(res.msg);
+          if (res.code == 0) {
+            Toast.success("登陆成功");
+            localStorage.setItem("user", JSON.stringify(res.data));
+            localStorage.setItem("token", res.token);
+          }
+          router.go(-1);
         })
         .catch((err) => {});
     }

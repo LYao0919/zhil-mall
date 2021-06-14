@@ -1,26 +1,32 @@
 <!--
  * @Author: 鲁遥
  * @Date: 2021-05-15 21:24:38
- * @LastEditTime: 2021-05-15 23:14:58
+ * @LastEditTime: 2021-06-14 13:49:48
  * @LastEditors: your name
  * @Description: 
- * @FilePath: /mall/mall-h5/src/views/user/index.vue
+ * @FilePath: /mall-h5/src/views/user/index.vue
 -->
 <template>
   <div class="user-box">
-    <notLoggedIn />
+    <loggedIn v-if="userInfo && userInfo.userId" />
+    <notLoggedIn v-else />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import notLoggedIn from "./component/notLoggedIn.vue";
+import loggedIn from "./component/loggedIn.vue";
 export default defineComponent({
   components: {
     notLoggedIn,
+    loggedIn,
   },
   setup() {
-    return {};
+    let userInfo = ref(JSON.parse(localStorage.getItem("user")) || {});
+    console.log(userInfo, 98765);
+
+    return { userInfo };
   },
 });
 </script>

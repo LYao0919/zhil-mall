@@ -1,10 +1,10 @@
 /*
  * @Author: 鲁遥
  * @Date: 2021-05-08 15:53:50
- * @LastEditTime: 2021-05-24 20:42:29
+ * @LastEditTime: 2021-06-14 20:10:41
  * @LastEditors: your name
  * @Description:
- * @FilePath: /mall/mall-h5/src/router/index.ts
+ * @FilePath: /mall-h5/src/router/index.ts
  */
 /*
  * @Author: 鲁遥
@@ -93,58 +93,6 @@ const routes: Array<RouteRecordRaw> = [
             act: "/search"
         }
     },
-
-
-    // {
-    //     path: "/layout",
-    //     name: "layout",
-    //     component: Layout,
-    //     meta: {
-    //         ishidden: true,
-    //         act: "/"
-    //     }
-    // },
-    //   {
-    //     path: "/orderManager",
-    //     name: "orderManager",
-    //     component: Layout,
-    //     meta: {
-    //       ishidden: false,
-    //       act: "/",
-    //       title: "订单中心",
-    //       icon: 'el-icon-s-order',
-    //     },
-    //     children: [
-    //       // 订单列表
-    //       {
-    //         path: "/orderManager/orderList",
-    //         name: "orderList",
-
-    //         component: () => import("../views/orderManager/orderList/index.vue"),
-    //         meta: {
-    //           title: "订单列表",
-    //           ishidden: false,
-    //           keepAlive: true, // 需要被缓存
-    //           act: "/orderManager/orderList",
-    //           // icon: 'el-icon-menu',
-    //           breadcrumb: [{ url: "/orderManager/orderList", title: '订单中心' }, { url: "/orderManager/orderList", title: '订单列表' }]
-    //         }
-    //       },
-    //       {
-    //         path: "/orderManager/orderInfo/:id/:type",
-    //         name: "orderInfo",
-    //         component: () =>
-    //           import("../views/orderManager/orderList/orderInfo.vue"),
-    //         meta: {
-    //           title: "订单详情",
-    //           ishidden: true,
-    //           act: "/orderManager/orderList",
-    //           breadcrumb: [{ url: "/orderManager/orderList", title: '订单中心' }, { url: "/orderManager/orderList", title: '订单列表' }, { url: "/orderManager/orderInfo/:id/:type", title: '订单详情' }]
-    //         }
-    //       }
-    //     ]
-    //   },
-
 ];
 
 const router = createRouter({
